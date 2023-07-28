@@ -7,7 +7,7 @@ import { User } from '../types';
 import { accessToken } from '../configs';
 
 export const login = async (req: Request, res: Response) => {
-    console.log("POST /login");
+    // console.log("POST /login");
 
     const { username, password } = req.body;
     
@@ -66,7 +66,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const getCurrentUser = async (req: Request, res: Response) => {
-    console.log("GET /self");
+    // console.log("GET /self");
 
     const user: User = res.locals.user;
 

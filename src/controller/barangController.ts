@@ -5,7 +5,7 @@ import { db } from '../util/db';
 import { barangSchema } from '../validator/barangValidator';
 
 export const getBarang = async (req: Request, res: Response) => {
-    console.log("GET /barang");
+    // console.log("GET /barang");
 
     const query = req.query.q || '';
     const perusahaan = req.query.perusahaan || '';
@@ -51,7 +51,7 @@ export const getBarang = async (req: Request, res: Response) => {
 }
 
 export const getBarangById = async (req: Request, res: Response) => {
-    console.log("GET /barang/:id")
+    // console.log("GET /barang/:id")
 
     const id = req.params.id;
 
@@ -94,11 +94,12 @@ export const getBarangById = async (req: Request, res: Response) => {
 }
 
 export const addBarang = async (req: Request, res: Response) => {
-    console.log("POST /barang");
+    // console.log("POST /barang");
 
-    const data: BarangRequest = barangSchema.parse(req.body);
-
+    
     try {
+        const data: BarangRequest = barangSchema.parse(req.body);
+        
         const barang = await db.barang.create({
             data: {
                 nama: data.nama,
@@ -115,8 +116,6 @@ export const addBarang = async (req: Request, res: Response) => {
             data: barang
         });
     } catch (error) {
-        console.log(data);
-
         return res.status(500).json({
             status: 'error',
             message: 'Barang gagal ditambahkan',
@@ -126,12 +125,13 @@ export const addBarang = async (req: Request, res: Response) => {
 }
 
 export const updateBarang = async (req: Request, res: Response) => {
-    console.log("PUT /barang/:id");
+    // console.log("PUT /barang/:id");
 
     const id = req.params.id;
-    const data: BarangRequest = barangSchema.parse(req.body);
-
+    
     try {
+        const data: BarangRequest = barangSchema.parse(req.body);
+        
         const barang = await db.barang.update({
             where: {
                 id: id
@@ -159,8 +159,62 @@ export const updateBarang = async (req: Request, res: Response) => {
     }
 }
 
+export const buyBarang = async (req: Request, res: Response) => {
+    // console.log("POST /buy/:id");
+
+    const id = req.params.id;
+    const jumlah = req.body.jumlah;
+
+    try {
+        const barang = await db.barang.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        if (barang) {
+            if (barang.stok >= jumlah) {
+                const newStok = barang.stok - jumlah;
+
+                const updatedBarang = await db.barang.update({
+                    where: {
+                        id: id
+                    },
+                    data: {
+                        stok: newStok
+                    }
+                });
+
+                return res.status(200).json({
+                    status: 'success',
+                    message: 'Barang berhasil dibeli',
+                    data: updatedBarang
+                });
+            } else {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Stok barang tidak cukup',
+                    data: null
+                });
+            }
+        } else {
+            return res.status(204).json({
+                status: 'success',
+                message: 'Barang tidak ditemukan',
+                data: null
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'Barang gagal dibeli',
+            data: null
+        });
+    }
+}
+
 export const deleteBarang = async (req: Request, res: Response) => {
-    console.log("DELETE /barang/:id");
+    // console.log("DELETE /barang/:id");
 
     const id = req.params.id;
 
