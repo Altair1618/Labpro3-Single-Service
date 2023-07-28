@@ -5,7 +5,7 @@ import { db } from "../util/db";
 import { perusahaanSchema } from "../validator/perusahaanValidator";
 
 export const getPerusahaan = async (req: Request, res: Response) => {
-    console.log("GET /perusahaan");
+    // console.log("GET /perusahaan");
 
     const query = req.query.q || '';
 
@@ -50,7 +50,7 @@ export const getPerusahaan = async (req: Request, res: Response) => {
 }
 
 export const getPerusahaanById = async (req: Request, res: Response) => {
-    console.log("GET /perusahaan/:id")
+    // console.log("GET /perusahaan/:id")
 
     const id = req.params.id;
 
@@ -92,11 +92,11 @@ export const getPerusahaanById = async (req: Request, res: Response) => {
 }
 
 export const addPerusahaan = async (req: Request, res: Response) => {
-    console.log("POST /perusahaan");
-
-    const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
+    // console.log("POST /perusahaan");
 
     try {
+        const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
+    
         const perusahaan = await db.perusahaan.create({
             data: {
                 nama: data.nama,
@@ -112,8 +112,6 @@ export const addPerusahaan = async (req: Request, res: Response) => {
             data: perusahaan
         });
     } catch (error) {
-        console.log(error);
-
         return res.status(500).json({
             status: 'error',
             message: 'Perusahaan gagal ditambahkan',
@@ -123,12 +121,13 @@ export const addPerusahaan = async (req: Request, res: Response) => {
 }
 
 export const updatePerusahaan = async (req: Request, res: Response) => {
-    console.log("PUT /perusahaan/:id");
+    // console.log("PUT /perusahaan/:id");
 
     const id = req.params.id;
-    const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
-
+    
     try {
+        const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
+    
         const perusahaan = await db.perusahaan.update({
             where: {
                 id: id
@@ -156,7 +155,7 @@ export const updatePerusahaan = async (req: Request, res: Response) => {
 }
 
 export const deletePerusahaan = async (req: Request, res: Response) => {
-    console.log("DELETE /perusahaan/:id");
+    // console.log("DELETE /perusahaan/:id");
 
     const id = req.params.id;
 

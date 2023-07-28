@@ -6,7 +6,7 @@ import { BarangData, PerusahaanData } from './types';
 import { db } from './util';
 
 import { getCurrentUser, login } from './controller/userController';
-import { addBarang, deleteBarang, getBarang, getBarangById, updateBarang } from './controller/barangController';
+import { addBarang, buyBarang, deleteBarang, getBarang, getBarangById, updateBarang } from './controller/barangController';
 import { addPerusahaan, deletePerusahaan, getPerusahaan, getPerusahaanById, updatePerusahaan } from './controller/perusahaanController';
 
 import { validateJWT } from './middlewares';
@@ -21,11 +21,13 @@ app.post('/login', login);
 
 app.get('/self', validateJWT, getCurrentUser);
 
-app.get('/barang', validateJWT, getBarang);
+app.get('/barang', getBarang);
 
-app.get('/barang/:id', validateJWT, getBarangById);
+app.get('/barang/:id', getBarangById);
 
 app.post('/barang', validateJWT, addBarang);
+
+app.post('/buy/:id', buyBarang);
 
 app.put('/barang/:id', validateJWT, updateBarang);
 

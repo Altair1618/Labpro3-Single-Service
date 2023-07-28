@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: labpro-single-service
+
+  server:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@host.docker.internal:5432/labpro-single-service?schema=public
+      ACCESS_TOKEN_SECRET: 1b2c3183496337ae44e1f2b7b15f1ac655a1e5eca6d065a5622a01be868c99a833ac52940749bf422d047463749de1e0e5a2c816184dded69122b7648a26c20b
+    depends_on:
+      - db
