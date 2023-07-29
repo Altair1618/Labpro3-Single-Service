@@ -6,9 +6,12 @@ A Single Service Backend Server for Shopping App built with ExpressJS developed 
 
 ## How To Run
 - Clone this repository
-- Fill the .env file with your own credentials
+- Rename `.env.example` to `.env` and fill the `.env` file with your configuration
 - Run `docker-compose up` command inside the repository folder
-- Server is started on docker image
+- Run `docker exec -it <container-id> sh` command to enter the php container
+- Run `npx prisma migrate dev --name init` command to migrate the database
+- Run `npx prisma db seed` command to seed the database
+- Server is started on docker image and can be accessed on `localhost:5000`
 
 ## Design Pattern
 1. Design Pattern Singleton </br>
