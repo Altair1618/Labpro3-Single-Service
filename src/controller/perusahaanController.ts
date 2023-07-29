@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 
 import { PerusahaanData, PerusahaanRequest } from "../types";
 import { db } from "../util/db";
-import { perusahaanSchema } from "../validator/perusahaanValidator";
 
 export const getPerusahaan = async (req: Request, res: Response) => {
     // console.log("GET /perusahaan");
@@ -95,7 +94,7 @@ export const addPerusahaan = async (req: Request, res: Response) => {
     // console.log("POST /perusahaan");
 
     try {
-        const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
+        const data: PerusahaanRequest = res.locals.data;
     
         const perusahaan = await db.perusahaan.create({
             data: {
@@ -126,7 +125,7 @@ export const updatePerusahaan = async (req: Request, res: Response) => {
     const id = req.params.id;
     
     try {
-        const data: PerusahaanRequest = perusahaanSchema.parse(req.body);
+        const data: PerusahaanRequest = res.locals.data;
     
         const perusahaan = await db.perusahaan.update({
             where: {

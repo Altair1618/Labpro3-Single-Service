@@ -10,6 +10,8 @@ import { addBarang, buyBarang, deleteBarang, getBarang, getBarangById, updateBar
 import { addPerusahaan, deletePerusahaan, getPerusahaan, getPerusahaanById, updatePerusahaan } from './controller/perusahaanController';
 
 import { validateJWT } from './middlewares';
+import { validatePerusahaan } from './middlewares/perusahaanValidator';
+import { validateBarang } from './middlewares/barangValidator';
 
 const app: Express = express();
 const port = 5000;
@@ -25,11 +27,11 @@ app.get('/barang', getBarang);
 
 app.get('/barang/:id', getBarangById);
 
-app.post('/barang', validateJWT, addBarang);
+app.post('/barang', validateJWT, validateBarang, addBarang);
 
 app.post('/buy/:id', buyBarang);
 
-app.put('/barang/:id', validateJWT, updateBarang);
+app.put('/barang/:id', validateJWT, validateBarang, updateBarang);
 
 app.delete('/barang/:id', validateJWT, deleteBarang);
 
@@ -37,11 +39,11 @@ app.get('/perusahaan', validateJWT, getPerusahaan);
 
 app.get('/perusahaan/:id', validateJWT, getPerusahaanById);
 
-app.post('/perusahaan', validateJWT, addPerusahaan);
+app.post('/perusahaan', validateJWT, validatePerusahaan, addPerusahaan);
 
 app.put('/perusahaan/:id', validateJWT, updatePerusahaan);
 
-app.delete('/perusahaan/:id', validateJWT, deletePerusahaan);
+app.delete('/perusahaan/:id', validateJWT, validatePerusahaan, deletePerusahaan);
 
 app.listen(port, ()=> {
     console.log(`Server started at http://localhost:${port}`);
