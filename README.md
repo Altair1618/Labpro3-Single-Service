@@ -6,6 +6,7 @@ A Single Service Backend Server for Shopping App built with ExpressJS developed 
 
 ## How To Run
 - Clone this repository
+- Fill the .env file with your own credentials
 - Run `docker-compose up` command inside the repository folder
 - Server is started on docker image
 
