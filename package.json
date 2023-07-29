@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts",
-    "start": "node dist/src/index.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "start": "node dist/src/server.js",
     "build": "npx tsc",
     "vercel-build": "prisma generate && prisma migrate deploy",
     "setup": "npx tsc && prisma generate && prisma migrate deploy && ts-node prisma/seed.ts"
