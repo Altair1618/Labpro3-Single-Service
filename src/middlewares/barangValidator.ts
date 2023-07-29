@@ -20,8 +20,8 @@ export const validateBarang = (req: Request, res: Response, next: NextFunction) 
 
 const barangSchema = z.object({
     nama: z.string(),
-    harga: z.number().min(1),
-    stok: z.number().min(0),
+    harga: z.number().positive(),
+    stok: z.number().nonnegative(),
     kode: z.string(),
     perusahaan_id: z.string().uuid()
 });
