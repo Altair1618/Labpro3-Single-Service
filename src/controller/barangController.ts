@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 
 import { BarangData, BarangRequest } from '../types';
 import { db } from '../util/db';
-import { barangSchema } from '../validator/barangValidator';
 
 export const getBarang = async (req: Request, res: Response) => {
     // console.log("GET /barang");
@@ -98,7 +97,7 @@ export const addBarang = async (req: Request, res: Response) => {
 
     
     try {
-        const data: BarangRequest = barangSchema.parse(req.body);
+        const data: BarangRequest = res.locals.data;
         
         const barang = await db.barang.create({
             data: {
@@ -130,7 +129,7 @@ export const updateBarang = async (req: Request, res: Response) => {
     const id = req.params.id;
     
     try {
-        const data: BarangRequest = barangSchema.parse(req.body);
+        const data: BarangRequest = res.locals.data;
         
         const barang = await db.barang.update({
             where: {
